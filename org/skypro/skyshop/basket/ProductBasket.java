@@ -36,7 +36,7 @@ public class ProductBasket {
             }
         }
         if (isEmpty) {
-            System.out.println("В корзине пусто");
+            System.out.println("в корзине пусто");
         } else {
             System.out.println("Итого: " + calculateTotalPrice());
         }
