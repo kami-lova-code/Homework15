@@ -46,7 +46,7 @@ public class App {
         System.out.println("Общая стоимость: " + basket.calculateTotalPrice());
 
         System.out.println("\n---Поиск товара по имени в пустой корзине---");
-        System.out.println("Поиск 'Сыворотка': " + basket.findProductByName("Сыворотка"));
+        System.out.println("Поиск 'Тоник': " + basket.findProductByName("Тоник"));
     }
 }
 
