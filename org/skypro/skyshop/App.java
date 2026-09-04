@@ -40,6 +40,7 @@ public class App {
         System.out.println("\n---Очистка корзины---");
         basket.clear();
 
+
         System.out.println("\n---Печать содержимого пустой корзины---");
         basket.printBasket();
 
