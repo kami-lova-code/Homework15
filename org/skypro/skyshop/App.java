@@ -7,6 +7,7 @@ public class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket();
 
+
         Product p1 = new Product("Атоми Ивнинг Кеар Набор", 3000);
         Product p2 = new Product("Маска для лица", 1200);
         Product p3 = new Product("Сыворотка", 2500);
