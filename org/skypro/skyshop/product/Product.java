@@ -1,6 +1,7 @@
 package org.skypro.skyshop.product;
 
 
+
 public class Product {
 
     private final String name;
