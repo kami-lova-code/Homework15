@@ -12,6 +12,7 @@ public class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket();
 
+
         basket.addProduct(new SimpleProduct("Хлеб", 50.0));
         basket.addProduct(new DiscountedProduct("Молоко", 100.0, 20));
         basket.addProduct(new FixPriceProduct("Книга"));
