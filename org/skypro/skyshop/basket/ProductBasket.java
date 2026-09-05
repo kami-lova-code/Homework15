@@ -16,8 +16,8 @@ public class ProductBasket {
         System.out.println("Невозможно добавить продукт");
     }
 
-    public int calculateTotalPrice() {
-        int total = 0;
+    public double calculateTotalPrice() {
+        double total = 0.0;
         for (Product p : products) {
             if (p != null) {
                 total += p.getPrice();
@@ -26,37 +26,61 @@ public class ProductBasket {
         return total;
     }
 
+
+    public int countSpecialProducts() {
+        int count = 0;
+        for (Product p : products) {
+            if (p != null && p.isSpecial()) {
+                count++;
+            }
+        }
+        return count;
+
+    }
+
     public void printBasket() {
-        boolean isEmpty = true;
+        System.out.println("--- Корзина ---");
         for (Product p : products) {
             if (p != null) {
-                System.out.println(p.getName() + ": " + p.getPrice());
-                isEmpty = false;
+                System.out.println(p.toString());
             }
         }
-        if (isEmpty) {
-            System.out.println("в корзине пусто");
-        } else {
-            System.out.println("Итого: " + calculateTotalPrice());
-        }
-    }
-
-    public boolean findProductByName(String name) {
-        for (Product p : products) {
-            if (p != null && p.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void clear() {
-        for (int i = 0; i < products.length; i++) {
-            products[i] = null;
-
-        }
+        System.out.println("Итого: " + calculateTotalPrice());
+        System.out.println("Специальных товаров: " + countSpecialProducts());
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
