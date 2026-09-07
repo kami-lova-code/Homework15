@@ -37,10 +37,12 @@ public class ProductBasket {
                 count++;
             }
         }
+
         return count;
-
-
     }
+
+
+         
 
     public void printBasket() {
         System.out.println("--- Корзина ---");
