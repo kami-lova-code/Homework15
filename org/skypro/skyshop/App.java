@@ -7,7 +7,6 @@ import org.skypro.skyshop.product.FixPriceProduct;
 
 
 
-
 public class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket();

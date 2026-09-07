@@ -14,6 +14,7 @@ public class ProductBasket {
                 products[i] = product;
                 return;
             }
+
         }
         System.out.println("Невозможно добавить продукт");
     }
@@ -44,7 +45,7 @@ public class ProductBasket {
         System.out.println("--- Корзина ---");
         for (Product p : products) {
             if (p != null) {
-                System.out.println();
+                System.out.println(p.toString());
             }
         }
         System.out.println("Итого: " + calculateTotalPrice());
