@@ -10,15 +10,14 @@ public abstract class Product implements Searchable {
     public Product(String name) {
         this.name = name;
     }
-
-
+    @Override
     public String getName() {
         return name;
     }
 
     @Override
     public String getSearchTerm() {
-        return "name";
+        return name;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.skypro.skyshop.search;
 
+
 public class SearchEngine {
 
    private final Searchable[] items;
@@ -21,7 +22,8 @@ public class SearchEngine {
         Searchable[] results = new Searchable[5];
         int found = 0;
         for (int i = 0; i < size && found < 5; i++) {
-            if (items[i].getSearchTerm().contains(query)) {
+            String term = items[i].getSearchTerm().toLowerCase();
+            if (term.contains(query.toLowerCase())) {
                 results[found++] = items[i];
             }
             
