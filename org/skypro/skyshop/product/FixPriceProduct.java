@@ -4,8 +4,6 @@ public class FixPriceProduct extends Product {
     private static final double FIXED_PRICE = 199.0;
 
 
-
-
     public FixPriceProduct(String name) {
         super(name);
     }
