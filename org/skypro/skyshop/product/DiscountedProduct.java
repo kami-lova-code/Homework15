@@ -4,7 +4,6 @@ public class DiscountedProduct extends Product {
 
 
 
-
     private final double basePrice;
     private final int discountPercent;
 
@@ -18,8 +17,7 @@ public class DiscountedProduct extends Product {
 
 
     @Override
-    public double getPrice() {
-        return basePrice * (100 - discountPercent) / 100.0;
+    public double getPrice() {return basePrice * (100 - discountPercent) / 100.0;
     }
 
 
