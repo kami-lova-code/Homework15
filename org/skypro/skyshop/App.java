@@ -7,11 +7,51 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.search.BestResultNotFound;
 import java.util.Arrays;
 
 
 public class App {
     public static void main(String[] args) {
+
+        System.out.println("===Проверка невалидных данных===");
+
+        try {
+            new SimpleProduct("", 50.0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("SimpleProduct" + e.getMessage());
+        }
+        try {
+            new SimpleProduct("Хлеб", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("SimpleProduct" + e.getMessage());
+        }
+        try {
+            new DiscountedProduct("Молоко", -100.0, 20);
+        } catch (IllegalArgumentException e) {
+            System.out.println("DiscountedProduct" + e.getMessage());
+        }
+        try {
+            new DiscountedProduct("Шоколад", 200.0, 150);
+        } catch (IllegalArgumentException e) {
+            System.out.println("DiscountedProduct" + e.getMessage());
+        }
+        try {
+            new DiscountedProduct("Сахар", 70.0, -5);
+        } catch (IllegalArgumentException e) {
+            System.out.println("DiscountedProduct" + e.getMessage());
+        }
+        try {
+            new FixPriceProduct("  ");
+        } catch (IllegalArgumentException e) {
+            System.out.println("FixPriceProduct" + e.getMessage());
+        }
+
+        System.out.println();
+
+
+
+
         SimpleProduct bread = new SimpleProduct("Хлеб",50.0);
         DiscountedProduct milk = new DiscountedProduct("Молоко",100.0,20);
         FixPriceProduct book = new FixPriceProduct("Книга");
@@ -70,9 +110,36 @@ public class App {
 
         System.out.println("\n=== Поиск (Arrays.toString):\"нига\" ===");
         System.out.println(Arrays.toString(engine.search("нига")));
+
+
+        System.out.println("\n=== Лучший результат: \"мол\" ===");
+        try {
+            Searchable best = engine.findBestMatch("мол");
+            System.out.println(best.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("\n=== Лучший результат: \"хлеб\" ===");
+        try {
+            Searchable best = engine.findBestMatch("хлеб");
+            System.out.println(best.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("\n=== Лучший результат: \"фырфыр\" ===");
+        try {
+            Searchable best = engine.findBestMatch("фырфыр");
+            System.out.println(best.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+
+        }
     }
 
 }
+
 
 
 
