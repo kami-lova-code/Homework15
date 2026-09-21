@@ -8,7 +8,11 @@ public class SimpleProduct extends Product {
     public SimpleProduct(String name,double price) {
         super(name);
         this.price = price;
+        if (price <= 0) {
+            throw new IllegalArgumentException(" Цена не может быть ниже нуля и равняться нулю");
+        }
     }
+
     @Override
     public double getPrice() {
         return price;
