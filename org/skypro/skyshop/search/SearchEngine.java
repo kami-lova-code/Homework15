@@ -12,7 +12,7 @@ public class SearchEngine {
 
 
     public SearchEngine() {
-        this.items = new ArrayList<>();
+        this.items = new LinkedList<>();
     }
 
     public void add(Searchable item) {
