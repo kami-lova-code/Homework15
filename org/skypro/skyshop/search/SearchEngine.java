@@ -1,46 +1,65 @@
 package org.skypro.skyshop.search;
 
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+
 public class SearchEngine {
 
-    private final Searchable[] items;
-    private int size = 0;
+    private final List<Searchable> items;
 
-    public SearchEngine(int capacity) {
-        this.items = new Searchable[capacity];
+
+    public SearchEngine() {
+        this.items = new LinkedList<>();
     }
 
     public void add(Searchable item) {
-        if (size < items.length) {
-            items[size++] = item;
-        } else {
-            System.out.println("Невозможно положить: поисковой движок заполнен");
+        if (item == null) {
+            return;
         }
+        items.add(item);
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int found = 0;
-        for (int i = 0; i < size && found < 5; i++) {
-            String term = items[i].getSearchTerm().toLowerCase();
-            if (term.contains(query.toLowerCase())) {
-                results[found++] = items[i];
-            }
 
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new LinkedList<>();
+        if (query == null || query.isBlank()) {
+            return results;
+        }
+        String queryLower = query.toLowerCase();
+        for (Searchable item : items) {
+            if (item == null) {
+                continue;
+            }
+            String term = item.getSearchTerm();
+            if (term == null) {
+                continue;
+            }
+            if (term.toLowerCase().contains(queryLower)) {
+                results.add(item);
+            }
         }
         return results;
     }
 
+
     public Searchable findBestMatch(String search) throws BestResultNotFound {
+
+        if (search == null || search.isBlank()) {
+            throw new BestResultNotFound(search);
+        }
 
         Searchable best = null;
         int maxCount = 0;
 
-        for (int i = 0; i < size; i++) {
-            if (items[i] == null) {
+
+        for (Searchable item : items) {
+            if (item == null) {
                 continue;
             }
-            String term = items[i].getSearchTerm();
+            String term = item.getSearchTerm();
             if (term == null) {
                 continue;
             }
@@ -60,7 +79,7 @@ public class SearchEngine {
 
             if (count > maxCount) {
                 maxCount = count;
-                best = items[i];
+                best = item;
             }
         }
         if (best == null) {
@@ -70,6 +89,9 @@ public class SearchEngine {
         return best;
     }
 }
+
+
+
 
 
 

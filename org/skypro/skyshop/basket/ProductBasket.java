@@ -1,28 +1,34 @@
 package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.search.Searchable;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class ProductBasket {
-    private final Product[] products = new Product[5];
 
+    private final List<Product> items;
 
-
-    public void addProduct(Product product) {
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                products[i] = product;
-                return;
-            }
-
-        }
-        System.out.println("Невозможно добавить продукт");
+    public ProductBasket() {
+        this.items = new LinkedList<>();
     }
+
+
+    public void add(Product product) {
+        if (product == null) {
+            return;
+        }
+        items.add(product);
+
+    }
+
 
     public double calculateTotalPrice() {
         double total = 0.0;
-        for (Product p : products) {
+        for (Product p : items) {
             if (p != null) {
                 total += p.getPrice();
             }
@@ -33,7 +39,7 @@ public class ProductBasket {
 
     public int countSpecialProducts() {
         int count = 0;
-        for (Product p : products) {
+        for (Product p : items) {
             if (p != null && p.isSpecial()) {
                 count++;
             }
@@ -47,7 +53,7 @@ public class ProductBasket {
 
     public void printBasket() {
         System.out.println("--- Корзина ---");
-        for (Product p : products) {
+        for (Product p : items) {
             if (p != null) {
                 System.out.println(p.toString());
             }
@@ -55,7 +61,25 @@ public class ProductBasket {
         System.out.println("Итого: " + calculateTotalPrice());
         System.out.println("Специальных товаров: " + countSpecialProducts());
     }
+
+
+    public List<Searchable> removeByName(String name) {
+        List<Searchable> removed = new LinkedList<>();
+        Iterator<Product> iterator = items.iterator();
+
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getName().equals(name)) {
+                removed.add(product);
+                iterator.remove();
+            }
+        }
+        return removed;
+    }
 }
+
+
+
 
 
 

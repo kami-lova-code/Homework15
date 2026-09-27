@@ -8,7 +8,9 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.search.BestResultNotFound;
-import java.util.Arrays;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class App {
@@ -50,22 +52,22 @@ public class App {
         System.out.println();
 
 
-
-
-        SimpleProduct bread = new SimpleProduct("Хлеб",50.0);
-        DiscountedProduct milk = new DiscountedProduct("Молоко",100.0,20);
+        SimpleProduct bread = new SimpleProduct("Хлеб", 50.0);
+        DiscountedProduct milk = new DiscountedProduct("Молоко", 100.0, 20);
         FixPriceProduct book = new FixPriceProduct("Книга");
-        SimpleProduct sugar = new SimpleProduct("Сахар",70.0);
+        SimpleProduct sugar = new SimpleProduct("Сахар", 70.0);
         DiscountedProduct chocolate = new DiscountedProduct("Шоколад", 200.0, 50);
+
 
         ProductBasket basket = new ProductBasket();
 
-        basket.addProduct(bread);
-        basket.addProduct(milk);
-        basket.addProduct(book);
-        basket.addProduct(sugar);
-        basket.addProduct(chocolate);
+        basket.add(bread);
+        basket.add(milk);
+        basket.add(book);
+        basket.add(sugar);
+        basket.add(chocolate);
         basket.printBasket();
+
 
         System.out.println();
 
@@ -74,7 +76,7 @@ public class App {
         Article article2 = new Article("Как выбрать молоко", "Молоко бывает разной жирности и состава.");
         Article article3 = new Article("Шоколад: вред или польза", "Тёмный шоколад содержит антиоксиданты.");
 
-        SearchEngine engine = new SearchEngine(10);
+        SearchEngine engine = new SearchEngine();
         engine.add(bread);
         engine.add(milk);
         engine.add(book);
@@ -85,15 +87,15 @@ public class App {
         engine.add(article3);
 
         System.out.println("=== Поиск: \"мол\"===");
-        Searchable[] results1 = engine.search("мол");
-        for (Searchable s: results1) {
+        List<Searchable> results1 = engine.search("мол");
+        for (Searchable s : results1) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }
         }
 
         System.out.println("\n === Поиск: \"хлеб\" ===");
-        Searchable[] results2 = engine.search("хлеб");
+        List<Searchable> results2 = engine.search("хлеб");
         for (Searchable s : results2) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
@@ -101,15 +103,15 @@ public class App {
         }
 
         System.out.println("\n === Поиск: \"шокол\" ===");
-        Searchable[] results3 = engine.search("шокол");
+        List<Searchable> results3 = engine.search("шокол");
         for (Searchable s : results3) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }
         }
 
-        System.out.println("\n=== Поиск (Arrays.toString):\"нига\" ===");
-        System.out.println(Arrays.toString(engine.search("нига")));
+        System.out.println("\n=== Поиск:\"нига\" ===");
+        System.out.println(engine.search("нига").toString());
 
 
         System.out.println("\n=== Лучший результат: \"мол\" ===");
@@ -136,8 +138,38 @@ public class App {
             System.out.println(e.getMessage());
 
         }
-    }
+        System.out.println("\n=== Удаляем «Молоко» ===");
+        List<Searchable> removed = basket.removeByName("Молоко");
+        System.out.println("Удалено продуктов: " + removed.size());
+        for (Searchable s : removed) {
+            System.out.println("- " + s.getName());
+        }
+        System.out.println("\n=== Корзина после удаления ===");
+        basket.printBasket();
 
+        System.out.println("\n=== Удаляем «Чай» (не существует) ===");
+        List<Searchable> removedEmpty = basket.removeByName("Чай");
+        if (removedEmpty.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Удалено продуктов: " + removedEmpty.size());
+        }
+
+        System.out.println("\n=== Корзина после попытки удаления несуществующего ===");
+        basket.printBasket();
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 }
 
 
@@ -145,12 +177,6 @@ public class App {
 
 
        
-
-
-
-
-
-
 
 
 
