@@ -9,7 +9,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.search.BestResultNotFound;
 
-import java.util.LinkedList;
+import java.util.Map;
 import java.util.List;
 
 
@@ -87,24 +87,24 @@ public class App {
         engine.add(article3);
 
         System.out.println("=== Поиск: \"мол\"===");
-        List<Searchable> results1 = engine.search("мол");
-        for (Searchable s : results1) {
+        Map<String,Searchable> results1 = engine.search("мол");
+        for (Searchable s : results1.values()) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }
         }
 
         System.out.println("\n === Поиск: \"хлеб\" ===");
-        List<Searchable> results2 = engine.search("хлеб");
-        for (Searchable s : results2) {
+        Map<String,Searchable> results2 = engine.search("хлеб");
+        for (Searchable s : results2.values()) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }
         }
 
         System.out.println("\n === Поиск: \"шокол\" ===");
-        List<Searchable> results3 = engine.search("шокол");
-        for (Searchable s : results3) {
+        Map<String,Searchable> results3 = engine.search("шокол");
+        for (Searchable s : results3.values()) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }

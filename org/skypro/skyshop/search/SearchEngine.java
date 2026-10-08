@@ -1,9 +1,10 @@
 package org.skypro.skyshop.search;
 
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class SearchEngine {
@@ -23,8 +24,8 @@ public class SearchEngine {
     }
 
 
-    public List<Searchable> search(String query) {
-        List<Searchable> results = new LinkedList<>();
+    public Map<String,Searchable> search(String query) {
+        Map<String,Searchable> results = new TreeMap<>();
         if (query == null || query.isBlank()) {
             return results;
         }
@@ -38,7 +39,7 @@ public class SearchEngine {
                 continue;
             }
             if (term.toLowerCase().contains(queryLower)) {
-                results.add(item);
+                results.put(item.getName(),item);
             }
         }
         return results;
