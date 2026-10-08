@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 
-
 public class SearchEngine {
 
     private final List<Searchable> items;
