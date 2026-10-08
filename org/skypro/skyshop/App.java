@@ -8,7 +8,6 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.search.BestResultNotFound;
-
 import java.util.Map;
 import java.util.List;
 
