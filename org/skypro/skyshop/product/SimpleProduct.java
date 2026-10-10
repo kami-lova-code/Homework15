@@ -4,6 +4,8 @@ public class SimpleProduct extends Product {
     private final double price;
 
 
+
+
     public SimpleProduct(String name,double price) {
         super(name);
         this.price = price;
