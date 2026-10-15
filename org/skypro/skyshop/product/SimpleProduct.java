@@ -5,7 +5,6 @@ public class SimpleProduct extends Product {
 
 
 
-
     public SimpleProduct(String name,double price) {
         super(name);
         this.price = price;

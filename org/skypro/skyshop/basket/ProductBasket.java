@@ -3,17 +3,12 @@ package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-
+import java.util.*;
 
 
 public class ProductBasket {
 
-    private final Map<String, List<Product>> items;
+    private final Map<String,List<Product>> items;
 
     public ProductBasket() {
         this.items = new HashMap<>();
@@ -24,6 +19,7 @@ public class ProductBasket {
         if (product == null) {
             return;
         }
+        String name = product.getName();
         items.computeIfAbsent(product.getName(), k -> new LinkedList<>()).add(product);
 
     }

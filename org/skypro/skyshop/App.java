@@ -8,10 +8,8 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.search.BestResultNotFound;
-import java.util.Map;
 import java.util.List;
-
-
+import java.util.Set;
 
 
 public class App {
@@ -88,24 +86,24 @@ public class App {
         engine.add(article3);
 
         System.out.println("=== Поиск: \"мол\"===");
-        Map<String,Searchable> results1 = engine.search("мол");
-        for (Searchable s : results1.values()) {
+        Set<Searchable> results1 = engine.search("мол");
+        for (Searchable s : results1) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }
         }
 
         System.out.println("\n === Поиск: \"хлеб\" ===");
-        Map<String,Searchable> results2 = engine.search("хлеб");
-        for (Searchable s : results2.values()) {
+        Set<Searchable> results2 = engine.search("хлеб");
+        for (Searchable s : results2) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }
         }
 
         System.out.println("\n === Поиск: \"шокол\" ===");
-        Map<String,Searchable> results3 = engine.search("шокол");
-        for (Searchable s : results3.values()) {
+        Set<Searchable> results3 = engine.search("шокол");
+        for (Searchable s : results3) {
             if (s != null) {
                 System.out.println(s.getStringRepresentation());
             }
