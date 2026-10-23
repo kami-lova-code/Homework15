@@ -2,6 +2,8 @@ package org.skypro.skyshop.search;
 
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 
 public class SearchEngine {
@@ -22,24 +24,22 @@ public class SearchEngine {
 
 
     public Set<Searchable> search(String query) {
-        Set<Searchable> results = new TreeSet<>(byNameLengthDescThenAlpha());
+
         if (query == null || query.isBlank()) {
-            return results;
+            return new TreeSet<>(byNameLengthDescThenAlpha());
         }
+
         String queryLower = query.toLowerCase();
-        for (Searchable item : items) {
-            if (item == null) {
-                continue;
-            }
-            String term = item.getSearchTerm();
-            if (term == null) {
-                continue;
-            }
-            if (term.toLowerCase().contains(queryLower)) {
-                results.add(item);
-            }
-        }
-        return results;
+
+        Supplier<Set<Searchable>> treeSetSupplier = () -> new TreeSet<>(byNameLengthDescThenAlpha());
+
+        return items.stream()
+                .filter(item -> item != null)
+                .filter(item -> {
+                    String term = item.getSearchTerm();
+                    return term != null && term.toLowerCase().contains(queryLower);
+                })
+                .collect(Collectors.toCollection(treeSetSupplier));
     }
 
     public static Comparator<Searchable> byNameLengthDescThenAlpha() {

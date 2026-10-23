@@ -19,46 +19,48 @@ public class ProductBasket {
         if (product == null) {
             return;
         }
-        String name = product.getName();
+
         items.computeIfAbsent(product.getName(), k -> new LinkedList<>()).add(product);
 
     }
 
 
     public double calculateTotalPrice() {
-        double total = 0.0;
-        for (List<Product> productList : items.values()) {
-            for (Product p : productList)
-                if (p != null) {
-                    total += p.getPrice();
-                }
-        }
-        return total;
+        return items.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .mapToDouble(Product::getPrice)
+                .sum();
+    }
+
+    private long getSpecialCount() {
+        return items.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
     }
 
 
+
     public int countSpecialProducts() {
-        int count = 0;
-        for (List<Product> productList : items.values()) {
-            for (Product p : productList)
-                if (p != null && p.isSpecial()) {
-                    count++;
-                }
-        }
-        return count;
+        long count = getSpecialCount();
+
+        return Math.toIntExact(count);
 
 
     }
 
     public void printBasket() {
         System.out.println("--- Корзина ---");
-        for (List<Product> productList : items.values()) {
-            for (Product p : productList) {
-                if (p != null) {
-                    System.out.println(p.toString());
-                }
-            }
-        }
+
+        items.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .forEach(System.out::println);
+
+
+
             System.out.println("Итого: " + calculateTotalPrice());
             System.out.println("Специальных товаров: " + countSpecialProducts());
         }
