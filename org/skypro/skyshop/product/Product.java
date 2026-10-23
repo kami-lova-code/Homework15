@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public abstract class Product implements Searchable {
 
+
     private final String name;
 
 
