@@ -1,20 +1,18 @@
 package org.skypro.skyshop.search;
 
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 
 public class SearchEngine {
 
-    private final List<Searchable> items;
+    private final Set<Searchable> items;
 
 
     public SearchEngine() {
-        this.items = new LinkedList<>();
+        this.items = new HashSet<>();
     }
 
     public void add(Searchable item) {
@@ -25,25 +23,39 @@ public class SearchEngine {
     }
 
 
-    public Map<String,Searchable> search(String query) {
-        Map<String,Searchable> results = new TreeMap<>();
+    public Set<Searchable> search(String query) {
+
         if (query == null || query.isBlank()) {
-            return results;
+            return new TreeSet<>(byNameLengthDescThenAlpha());
         }
+
         String queryLower = query.toLowerCase();
-        for (Searchable item : items) {
-            if (item == null) {
-                continue;
+
+        Supplier<Set<Searchable>> treeSetSupplier = () -> new TreeSet<>(byNameLengthDescThenAlpha());
+
+        return items.stream()
+                .filter(item -> item != null)
+                .filter(item -> {
+                    String term = item.getSearchTerm();
+                    return term != null && term.toLowerCase().contains(queryLower);
+                })
+                .collect(Collectors.toCollection(treeSetSupplier));
+    }
+
+    public static Comparator<Searchable> byNameLengthDescThenAlpha() {
+        return (s1,s2) -> {
+            int len1 = s1.getName().length();
+            int len2 = s2.getName().length();
+
+            int lengthCompare = Integer.compare(len2, len1);
+
+            if (lengthCompare != 0) {
+                return lengthCompare;
             }
-            String term = item.getSearchTerm();
-            if (term == null) {
-                continue;
-            }
-            if (term.toLowerCase().contains(queryLower)) {
-                results.put(item.getName(),item);
-            }
-        }
-        return results;
+            return s1.getName().compareTo(s2.getName());
+
+
+        };
     }
 
 
@@ -52,9 +64,9 @@ public class SearchEngine {
         if (search == null || search.isBlank()) {
             throw new BestResultNotFound(search);
         }
-
-        Searchable best = null;
-        int maxCount = 0;
+        String searchLower = search.toLowerCase();
+        Searchable bestItem = null;
+        int bestCount = -1;
 
 
         for (Searchable item : items) {
@@ -67,28 +79,25 @@ public class SearchEngine {
             }
 
             String termLower = term.toLowerCase();
-            String searchLower = search.toLowerCase();
-
             int count = 0;
             int index = 0;
-            int foundIndex = termLower.indexOf(searchLower, index);
 
-            while (foundIndex != -1) {
+
+            while ((index = termLower.indexOf(searchLower,index)) !=-1){
                 count++;
-                index = foundIndex + searchLower.length();
-                foundIndex = termLower.indexOf(searchLower, index);
+                index ++;
             }
 
-            if (count > maxCount) {
-                maxCount = count;
-                best = item;
+            if (count > bestCount) {
+                bestCount = count;
+                bestItem = item;
             }
         }
-        if (best == null) {
+        if (bestItem == null || bestCount == 0) {
             throw new BestResultNotFound(search);
 
         }
-        return best;
+        return bestItem;
     }
 }
 
